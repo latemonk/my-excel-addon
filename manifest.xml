@@ -19,8 +19,8 @@
   <Description DefaultValue="자연어로 Excel 작업을 수행하는 AI 도우미"/>
 
   <!-- Icon for your add-in. Used on installation screens and the add-ins dialog. -->
-  <IconUrl DefaultValue="https://github.com/latemonk/my-excel-addon/assets/icon-32.png" />
-  <HighResolutionIconUrl DefaultValue="hhttps://github.com/latemonk/my-excel-addon/assets/icon-64.png"/>
+  <IconUrl DefaultValue="https://latemonk.github.io/my-excel-addon/assets/icon-32.png" />
+  <HighResolutionIconUrl DefaultValue="https://latemonk.github.io/my-excel-addon/assets/icon-64.png"/>
 
   <!--If you plan to submit this add-in to the Office Store, uncomment the SupportUrl element below-->
   <SupportUrl DefaultValue="https://worksai.com/support" />
@@ -36,7 +36,7 @@
     <Host Name="Workbook" />
   </Hosts>
   <DefaultSettings>
-    <SourceLocation DefaultValue="https://github.com/latemonk/my-excel-addon/taskpane.html" />
+    <SourceLocation DefaultValue="https://latemonk.github.io/my-excel-addon/taskpane.html" />
   </DefaultSettings>
   <!-- End TaskPane Mode integration.  -->
 
@@ -116,13 +116,13 @@
     <!-- You can use resources across hosts and form factors. -->
     <Resources>
       <bt:Images>
-        <bt:Image id="Works.tpicon_16x16" DefaultValue="https://github.com/latemonk/my-excel-addon/assets/icon-16.png" />
-        <bt:Image id="Works.tpicon_32x32" DefaultValue="https://github.com/latemonk/my-excel-addon/assets/icon-32.png" />
-        <bt:Image id="Works.tpicon_80x80" DefaultValue="https://github.com/latemonk/my-excel-addon/assets/icon-80.png" />
+        <bt:Image id="Works.tpicon_16x16" DefaultValue="https://latemonk.github.io/my-excel-addon/assets/icon-16.png" />
+        <bt:Image id="Works.tpicon_32x32" DefaultValue="https://latemonk.github.io/my-excel-addon/assets/icon-32.png" />
+        <bt:Image id="Works.tpicon_80x80" DefaultValue="https://latemonk.github.io/my-excel-addon/assets/icon-80.png" />
       </bt:Images>
       <bt:Urls>
-        <bt:Url id="Works.DesktopFunctionFile.Url" DefaultValue="https://github.com/latemonk/my-excel-addon/function-file/function-file.html" />
-        <bt:Url id="Works.Taskpane.Url" DefaultValue="https://github.com/latemonk/my-excel-addon/taskpane.html" />
+        <bt:Url id="Works.DesktopFunctionFile.Url" DefaultValue="https://latemonk.github.io/my-excel-addon/function-file/function-file.html" />
+        <bt:Url id="Works.Taskpane.Url" DefaultValue="https://latemonk.github.io/my-excel-addon/taskpane.html" />
         <bt:Url id="Works.GetStarted.LearnMoreUrl" DefaultValue="https://go.microsoft.com/fwlink/?LinkId=276812" />
       </bt:Urls>
       <!-- ShortStrings max characters==125. -->

@@ -339,6 +339,10 @@
                 <div class="stat-value" id="totalUsage">0</div>
                 <div class="stat-label">총 사용 횟수</div>
             </div>
+            <div class="stat-card">
+                <div class="stat-value" id="totalUsers">0</div>
+                <div class="stat-label">전체 사용자</div>
+            </div>
         </div>
         
         <!-- 알림 -->
@@ -668,12 +672,19 @@
                     return;
                 }
                 
-                tbody.innerHTML = logs.map(log => `
+                tbody.innerHTML = logs.map(log => {
+                    const isFree = log.isFreeUser === 'true' || log.isFreeUser === true || 
+                                   log.authKey === 'Free' || log.company === 'Free User';
+                    const userTypeDisplay = isFree ? 
+                        '<span style="color: #059669; font-weight: bold;">무료</span>' : 
+                        '<span style="color: #dc2626; font-weight: bold;">유료</span>';
+                    
+                    return `
                     <tr>
                         <td>${log.koreanTime || log.timestamp}</td>
                         <td>${log.email}</td>
-                        <td>${log.company}</td>
-                        <td title="${log.authKey}">${log.authKey.substring(0, 10)}...</td>
+                        <td>${log.company} ${userTypeDisplay}</td>
+                        <td title="${log.authKey}">${log.authKey && log.authKey !== 'Free' ? log.authKey.substring(0, 10) + '...' : '무료'}</td>
                         <td>${log.model}</td>
                         <td><span style="font-weight: bold; color: #0066cc;">${log.action || '알 수 없음'}</span></td>
                         <td title="${log.command || ''}"><div style="max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${log.command || '-'}</div></td>
@@ -681,7 +692,7 @@
                         <td>${log.browser}</td>
                         <td>${log.os}</td>
                     </tr>
-                `).join('');
+                `}).join('');
                 
                 showAlert(`${logs.length}개의 로그를 불러왔습니다.`, 'success');
             } catch (error) {
@@ -724,11 +735,12 @@
                     for (const [companyName, companyData] of Object.entries(stats.companies)) {
                         const monthlyUsers = companyData.monthlyActiveUsers || {};
                         const sortedMonths = Object.keys(monthlyUsers).sort().reverse();
+                        const isFreeCompany = companyData.isFree || companyName === 'Free User';
                         
                         statsHTML += '<tr>';
-                        statsHTML += `<td><strong>${companyName}</strong></td>`;
-                        statsHTML += `<td>${companyData.authKey ? `<span class="key-value">${companyData.authKey}</span>` : '-'}</td>`;
-                        statsHTML += `<td><span class="status ${companyData.isActive ? 'active' : 'inactive'}">${companyData.isActive ? '활성' : '비활성'}</span></td>`;
+                        statsHTML += `<td><strong>${companyName}</strong>${isFreeCompany ? ' <span style="color: #059669;">(무료)</span>' : ''}</td>`;
+                        statsHTML += `<td>${companyData.authKey ? `<span class="key-value">${companyData.authKey}</span>` : (isFreeCompany ? '무료' : '-')}</td>`;
+                        statsHTML += `<td>${isFreeCompany ? '<span style="color: #059669;">무료</span>' : `<span class="status ${companyData.isActive ? 'active' : 'inactive'}">${companyData.isActive ? '활성' : '비활성'}</span>`}</td>`;
                         statsHTML += `<td style="text-align: center; font-weight: bold;">${companyData.totalUniqueUsers || 0}</td>`;
                         statsHTML += `<td style="text-align: center; color: #2563eb; font-weight: bold;">${companyData.currentMonthUsers || 0}</td>`;
                         statsHTML += '<td>';
@@ -753,13 +765,61 @@
                     statsHTML += `<div style="margin-top: 30px; padding: 20px; background: #f3f4f6; border-radius: 8px;">`;
                     statsHTML += `<h3 style="margin-bottom: 10px;">전체 요약</h3>`;
                     statsHTML += `<p><strong>총 고유 사용자 수:</strong> ${stats.totalUniqueUsers || 0}명</p>`;
-                    statsHTML += `<p><strong>현재 월:</strong> ${stats.currentMonth}</p>`;
+                    statsHTML += `<p style="margin-left: 20px;"><span style="color: #dc2626;">• 유료 사용자:</span> ${stats.totalPaidUsers || 0}명</p>`;
+                    statsHTML += `<p style="margin-left: 20px;"><span style="color: #059669;">• 무료 사용자:</span> ${stats.totalFreeUsers || 0}명</p>`;
+                    statsHTML += `<p><strong>현재 월 (${stats.currentMonth}):</strong></p>`;
+                    statsHTML += `<p style="margin-left: 20px;"><span style="color: #dc2626;">• 유료 사용자:</span> ${stats.breakdown?.paid?.currentMonthUsers || 0}명</p>`;
+                    statsHTML += `<p style="margin-left: 20px;"><span style="color: #059669;">• 무료 사용자:</span> ${stats.breakdown?.free?.currentMonthUsers || 0}명</p>`;
                     statsHTML += '</div>';
+                    
+                    // 무료/유료 월별 추세
+                    if (stats.breakdown) {
+                        statsHTML += `<div style="margin-top: 30px; padding: 20px; background: #fff; border: 1px solid #e5e7eb; border-radius: 8px;">`;
+                        statsHTML += `<h3 style="margin-bottom: 15px;">무료/유료 사용자 월별 추세</h3>`;
+                        
+                        // 월별 데이터 수집
+                        const allMonths = new Set([
+                            ...Object.keys(stats.breakdown.free.monthlyActiveUsers || {}),
+                            ...Object.keys(stats.breakdown.paid.monthlyActiveUsers || {})
+                        ]);
+                        const sortedMonths = Array.from(allMonths).sort().reverse();
+                        
+                        if (sortedMonths.length > 0) {
+                            statsHTML += '<table class="key-table" style="margin-top: 10px;">';
+                            statsHTML += '<thead><tr>';
+                            statsHTML += '<th>월</th>';
+                            statsHTML += '<th style="text-align: center;">전체</th>';
+                            statsHTML += '<th style="text-align: center; color: #dc2626;">유료</th>';
+                            statsHTML += '<th style="text-align: center; color: #059669;">무료</th>';
+                            statsHTML += '</tr></thead><tbody>';
+                            
+                            for (const month of sortedMonths) {
+                                const freeCount = stats.breakdown.free.monthlyActiveUsers[month] || 0;
+                                const paidCount = stats.breakdown.paid.monthlyActiveUsers[month] || 0;
+                                const totalCount = freeCount + paidCount;
+                                
+                                statsHTML += '<tr>';
+                                statsHTML += `<td><strong>${month}</strong></td>`;
+                                statsHTML += `<td style="text-align: center; font-weight: bold;">${totalCount}</td>`;
+                                statsHTML += `<td style="text-align: center; color: #dc2626; font-weight: bold;">${paidCount}</td>`;
+                                statsHTML += `<td style="text-align: center; color: #059669; font-weight: bold;">${freeCount}</td>`;
+                                statsHTML += '</tr>';
+                            }
+                            
+                            statsHTML += '</tbody></table>';
+                        }
+                        
+                        statsHTML += '</div>';
+                    }
                 }
                 
                 statsHTML += '</div>';
                 
                 document.getElementById('statsContent').innerHTML = statsHTML;
+                
+                // Update the total users stat in the header
+                document.getElementById('totalUsers').textContent = stats.totalUniqueUsers || 0;
+                
                 showAlert('통계를 불러왔습니다.', 'success');
                 
             } catch (error) {

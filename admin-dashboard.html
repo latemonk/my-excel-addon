@@ -400,6 +400,8 @@
                                 <th>회사명</th>
                                 <th>인증키</th>
                                 <th>모델</th>
+                                <th>수행 작업</th>
+                                <th>명령어</th>
                                 <th>IP</th>
                                 <th>브라우저</th>
                                 <th>OS</th>
@@ -407,7 +409,7 @@
                         </thead>
                         <tbody id="logsList">
                             <tr>
-                                <td colspan="8" style="text-align: center; color: #999;">로그를 불러오려면 위 버튼을 클릭하세요.</td>
+                                <td colspan="10" style="text-align: center; color: #999;">로그를 불러오려면 위 버튼을 클릭하세요.</td>
                             </tr>
                         </tbody>
                     </table>
@@ -662,7 +664,7 @@
                 // 테이블 업데이트
                 const tbody = document.getElementById('logsList');
                 if (logs.length === 0) {
-                    tbody.innerHTML = '<tr><td colspan="8" style="text-align: center; color: #999;">사용 로그가 없습니다.</td></tr>';
+                    tbody.innerHTML = '<tr><td colspan="10" style="text-align: center; color: #999;">사용 로그가 없습니다.</td></tr>';
                     return;
                 }
                 
@@ -673,6 +675,8 @@
                         <td>${log.company}</td>
                         <td title="${log.authKey}">${log.authKey.substring(0, 10)}...</td>
                         <td>${log.model}</td>
+                        <td><span style="font-weight: bold; color: #0066cc;">${log.action || '알 수 없음'}</span></td>
+                        <td title="${log.command || ''}"><div style="max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${log.command || '-'}</div></td>
                         <td>${log.ip}</td>
                         <td>${log.browser}</td>
                         <td>${log.os}</td>

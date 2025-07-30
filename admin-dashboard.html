@@ -322,6 +322,7 @@
         <div class="tab-navigation" style="margin-bottom: 20px;">
             <button class="tab-button active" onclick="showTab('keys')">인증키 관리</button>
             <button class="tab-button" onclick="showTab('logs')">사용 로그</button>
+            <button class="tab-button" onclick="showTab('stats')">사용자 통계</button>
         </div>
         
         <!-- 통계 -->
@@ -410,6 +411,19 @@
                             </tr>
                         </tbody>
                     </table>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 사용자 통계 탭 -->
+        <div id="statsTab" class="tab-content">
+            <div class="card">
+                <h2>회사별 월별 사용자 통계</h2>
+                <div style="margin-bottom: 20px;">
+                    <button onclick="loadUsageStats()" class="secondary">통계 새로고침</button>
+                </div>
+                <div id="statsContent">
+                    <p style="text-align: center; color: #999;">통계를 불러오려면 위 버튼을 클릭하세요.</p>
                 </div>
             </div>
         </div>
@@ -623,9 +637,11 @@
             // Mark button as active
             event.target.classList.add('active');
             
-            // Load logs if switching to logs tab
+            // Load data if switching to specific tabs
             if (tabName === 'logs') {
                 loadLogs();
+            } else if (tabName === 'stats') {
+                loadUsageStats();
             }
         }
         
@@ -667,6 +683,84 @@
             } catch (error) {
                 console.error('Load logs error:', error);
                 showAlert('로그를 불러오는데 실패했습니다.', 'error');
+            }
+        }
+        
+        // 사용자 통계 로드
+        async function loadUsageStats() {
+            try {
+                const response = await fetch('https://excel-addon-backend.vercel.app/api/usage-stats', {
+                    headers: {
+                        'X-Admin-Password': adminPassword
+                    }
+                });
+                
+                if (!response.ok) throw new Error('Failed to load stats');
+                
+                const data = await response.json();
+                const stats = data.stats;
+                
+                // 통계 HTML 생성
+                let statsHTML = '<div style="overflow-x: auto;">';
+                
+                if (!stats.companies || Object.keys(stats.companies).length === 0) {
+                    statsHTML = '<p style="text-align: center; color: #999;">아직 사용 통계가 없습니다.</p>';
+                } else {
+                    // 회사별 통계 테이블
+                    statsHTML += '<table class="key-table">';
+                    statsHTML += '<thead><tr>';
+                    statsHTML += '<th>회사명</th>';
+                    statsHTML += '<th>인증키</th>';
+                    statsHTML += '<th>상태</th>';
+                    statsHTML += '<th>전체 고유 사용자</th>';
+                    statsHTML += '<th>이번 달 사용자</th>';
+                    statsHTML += '<th>월별 사용자 수</th>';
+                    statsHTML += '</tr></thead><tbody>';
+                    
+                    for (const [companyName, companyData] of Object.entries(stats.companies)) {
+                        const monthlyUsers = companyData.monthlyActiveUsers || {};
+                        const sortedMonths = Object.keys(monthlyUsers).sort().reverse();
+                        
+                        statsHTML += '<tr>';
+                        statsHTML += `<td><strong>${companyName}</strong></td>`;
+                        statsHTML += `<td>${companyData.authKey ? `<span class="key-value">${companyData.authKey}</span>` : '-'}</td>`;
+                        statsHTML += `<td><span class="status ${companyData.isActive ? 'active' : 'inactive'}">${companyData.isActive ? '활성' : '비활성'}</span></td>`;
+                        statsHTML += `<td style="text-align: center; font-weight: bold;">${companyData.totalUniqueUsers || 0}</td>`;
+                        statsHTML += `<td style="text-align: center; color: #2563eb; font-weight: bold;">${companyData.currentMonthUsers || 0}</td>`;
+                        statsHTML += '<td>';
+                        
+                        if (sortedMonths.length > 0) {
+                            statsHTML += '<div style="max-height: 100px; overflow-y: auto;">';
+                            for (const month of sortedMonths) {
+                                statsHTML += `<div style="margin: 2px 0;"><span style="color: #6b7280;">${month}:</span> <strong>${monthlyUsers[month]}</strong>명</div>`;
+                            }
+                            statsHTML += '</div>';
+                        } else {
+                            statsHTML += '-';
+                        }
+                        
+                        statsHTML += '</td>';
+                        statsHTML += '</tr>';
+                    }
+                    
+                    statsHTML += '</tbody></table>';
+                    
+                    // 전체 통계 요약
+                    statsHTML += `<div style="margin-top: 30px; padding: 20px; background: #f3f4f6; border-radius: 8px;">`;
+                    statsHTML += `<h3 style="margin-bottom: 10px;">전체 요약</h3>`;
+                    statsHTML += `<p><strong>총 고유 사용자 수:</strong> ${stats.totalUniqueUsers || 0}명</p>`;
+                    statsHTML += `<p><strong>현재 월:</strong> ${stats.currentMonth}</p>`;
+                    statsHTML += '</div>';
+                }
+                
+                statsHTML += '</div>';
+                
+                document.getElementById('statsContent').innerHTML = statsHTML;
+                showAlert('통계를 불러왔습니다.', 'success');
+                
+            } catch (error) {
+                console.error('Load stats error:', error);
+                showAlert('통계를 불러오는데 실패했습니다.', 'error');
             }
         }
     </script>

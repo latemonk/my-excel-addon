@@ -127,14 +127,14 @@
       </bt:Urls>
       <!-- ShortStrings max characters==125. -->
       <bt:ShortStrings>
-        <bt:String id="Works.TaskpaneButton.Label" DefaultValue="웍스AI 열기" />
-        <bt:String id="Works.Group1Label" DefaultValue="웍스AI" />
-        <bt:String id="Works.GetStarted.Title" DefaultValue="웍스AI 엑셀 도우미를 시작하세요!" />
+        <bt:String id="Works.TaskpaneButton.Label" DefaultValue="대화 편집" />
+        <bt:String id="Works.Group1Label" DefaultValue="셀리" />
+        <bt:String id="Works.GetStarted.Title" DefaultValue="이제 대화로 시트를 편집해 보세요!" />
       </bt:ShortStrings>
       <!-- LongStrings max characters==250. -->
       <bt:LongStrings>
         <bt:String id="Works.TaskpaneButton.Tooltip" DefaultValue="자연어로 Excel 작업을 수행합니다" />
-        <bt:String id="Works.GetStarted.Description" DefaultValue="웍스AI 엑셀 도우미가 로드되었습니다. 리본 메뉴에서 '웍스AI 열기' 버튼을 클릭하여 시작하세요." />
+        <bt:String id="Works.GetStarted.Description" DefaultValue="셀리가 로드되었습니다. 리본 메뉴에서 '대화 편집' 버튼을 클릭하여 시작하세요." />
       </bt:LongStrings>
     </Resources>
   </VersionOverrides>

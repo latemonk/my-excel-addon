@@ -127,7 +127,7 @@
       </bt:Urls>
       <!-- ShortStrings max characters==125. -->
       <bt:ShortStrings>
-        <bt:String id="Works.TaskpaneButton.Label" DefaultValue="말로 하는 시트 편집" />
+        <bt:String id="Works.TaskpaneButton.Label" DefaultValue="말로 하는&#13;시트 편집" />
         <bt:String id="Works.Group1Label" DefaultValue="셀리" />
         <bt:String id="Works.GetStarted.Title" DefaultValue="이제 대화로 시트를 편집해 보세요!" />
       </bt:ShortStrings>

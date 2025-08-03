@@ -15,7 +15,7 @@
   <ProviderName>Works AI</ProviderName>
   <DefaultLocale>ko-KR</DefaultLocale>
   <!-- The display name of your add-in. Used on the store and various places of the Office UI such as the add-ins dialog. -->
-  <DisplayName DefaultValue="웍스AI 엑셀 에이전트" />
+  <DisplayName DefaultValue="셀과 나의 연결고리" />
   <Description DefaultValue="자연어로 Excel 작업을 수행하는 AI 에이전트"/>
 
   <!-- Icon for your add-in. Used on installation screens and the add-ins dialog. -->
@@ -128,7 +128,7 @@
       <!-- ShortStrings max characters==125. -->
       <bt:ShortStrings>
         <bt:String id="Works.TaskpaneButton.Label" DefaultValue="대화로 시트 편집" />
-        <bt:String id="Works.Group1Label" DefaultValue="웍스AI" />
+        <bt:String id="Works.Group1Label" DefaultValue="셀리" />
         <bt:String id="Works.GetStarted.Title" DefaultValue="이제 대화로 시트를 편집해 보세요!" />
       </bt:ShortStrings>
       <!-- LongStrings max characters==250. -->

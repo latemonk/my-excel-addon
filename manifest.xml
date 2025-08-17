@@ -15,7 +15,7 @@
   <ProviderName>Works AI</ProviderName>
   <DefaultLocale>ko-KR</DefaultLocale>
   <!-- The display name of your add-in. Used on the store and various places of the Office UI such as the add-ins dialog. -->
-  <DisplayName DefaultValue="셀과 나의 연결고리" />
+  <DisplayName DefaultValue="셀리 - 셀과 나의 연결고리" />
   <Description DefaultValue="자연어로 Excel 작업을 수행하는 AI 에이전트"/>
 
   <!-- Icon for your add-in. Used on installation screens and the add-ins dialog. -->

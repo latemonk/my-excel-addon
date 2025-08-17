@@ -23,7 +23,7 @@
   <HighResolutionIconUrl DefaultValue="https://latemonk.github.io/my-excel-addon/assets/icon-64.png"/>
 
   <!--If you plan to submit this add-in to the Office Store, uncomment the SupportUrl element below-->
-  <SupportUrl DefaultValue="https://worksai.com/support" />
+  <SupportUrl DefaultValue="https://docs.wrks.ai/contact" />
 
   <!-- Domains that will be allowed when navigating. For this sample, only one domain is used. -->
   <AppDomains>

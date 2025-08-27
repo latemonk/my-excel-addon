@@ -12,7 +12,7 @@
 
   <!--Version. Updates from the store only get triggered if there is a version change. -->
   <Version>1.0.0.0</Version>
-  <ProviderName>Works AI</ProviderName>
+  <ProviderName>AI3(에이아이쓰리)</ProviderName>
   <DefaultLocale>ko-KR</DefaultLocale>
   <!-- The display name of your add-in. Used on the store and various places of the Office UI such as the add-ins dialog. -->
   <DisplayName DefaultValue="셀리 - 셀과 나의 연결고리" />
@@ -23,7 +23,7 @@
   <HighResolutionIconUrl DefaultValue="https://latemonk.github.io/my-excel-addon/assets/icon-64.png"/>
 
   <!--If you plan to submit this add-in to the Office Store, uncomment the SupportUrl element below-->
-  <SupportUrl DefaultValue="https://docs.wrks.ai/contact" />
+  <SupportUrl DefaultValue="https://bit.ly/cellyform" />
 
   <!-- Domains that will be allowed when navigating. For this sample, only one domain is used. -->
   <AppDomains>
@@ -121,20 +121,20 @@
         <bt:Image id="Works.tpicon_80x80" DefaultValue="https://latemonk.github.io/my-excel-addon/assets/icon-80.png" />
       </bt:Images>
       <bt:Urls>
-        <bt:Url id="Works.DesktopFunctionFile.Url" DefaultValue="https://latemonk.github.io/my-excel-addon/function-file/function-file.html" />
+        <bt:Url id="Works.DesktopFunctionFile.Url" DefaultValue="https://latemonk.github.io/my-excel-addon/commands.html" />
         <bt:Url id="Works.Taskpane.Url" DefaultValue="https://latemonk.github.io/my-excel-addon/taskpane.html" />
         <bt:Url id="Works.GetStarted.LearnMoreUrl" DefaultValue="https://go.microsoft.com/fwlink/?LinkId=276812" />
       </bt:Urls>
       <!-- ShortStrings max characters==125. -->
       <bt:ShortStrings>
-        <bt:String id="Works.TaskpaneButton.Label" DefaultValue="말로 하는 시트 편집" />
+        <bt:String id="Works.TaskpaneButton.Label" DefaultValue="말로 하는 엑셀 편집" />
         <bt:String id="Works.Group1Label" DefaultValue="셀리" />
         <bt:String id="Works.GetStarted.Title" DefaultValue="이제 대화로 시트를 편집해 보세요!" />
       </bt:ShortStrings>
       <!-- LongStrings max characters==250. -->
       <bt:LongStrings>
         <bt:String id="Works.TaskpaneButton.Tooltip" DefaultValue="자연어로 Excel 작업을 수행합니다" />
-        <bt:String id="Works.GetStarted.Description" DefaultValue="셀리가 로드되었습니다. 리본 메뉴에서 '말로 하는 시트 편집' 버튼을 클릭하여 시작하세요." />
+        <bt:String id="Works.GetStarted.Description" DefaultValue="셀리가 로드되었습니다. 리본 메뉴에서 '말로 하는 엑셀 편집' 버튼을 클릭하여 시작하세요." />
       </bt:LongStrings>
     </Resources>
   </VersionOverrides>
